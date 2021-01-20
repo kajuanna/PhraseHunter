@@ -12,9 +12,8 @@ document.getElementById("btn__reset").addEventListener("click", (e) => {
 });
 
 let keys = document.querySelectorAll(".key");
-
-keys.forEach((key) => {
-  key.addEventListener("click", (e) => {
-    game.handleInteraction(key);
+for (let i = 0; i < keys.length; i++) {
+  keys[i].addEventListener("click", (e) => {
+    game.handleInteraction(keys[i]);
   });
-});
+}

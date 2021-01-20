@@ -9,9 +9,8 @@ class Phrase {
 
   // Displays phrase on board.
   addPhraseToDisplay() {
-    console.log(this.phrase);
     const letters = this.phrase.split("");
-    const ul = document.getElementById("phrase");
+    const phraseContainer = document.getElementById("phrase");
 
     let html = ``;
 
@@ -23,37 +22,28 @@ class Phrase {
       }
     }
 
-    ul.insertAdjacentHTML("beforeend", html);
+    phraseContainer.insertAdjacentHTML("beforeend", html);
   }
 
-  /**
-   * Checks if passed letter is in phrase
-   * @param (string) letter - Letter to check
-   */
-  checkLetter(letter) {
-    return this.phrase.includes(letter);
-  }
-
-  /**
+  /** 
    * checkLetter function
-   * @param{string} letter-this is the letter that inside of the button
-   * @returns{boolean}- is there a match inside of the phrase
-   */
-
-  /**
-   * @param{string} letter-this is the letter that inside of the button
-   *
-   */
+   Checks if passed letter is in phrase
+      */
+  checkLetter(letter) {
+    if (this.phrase.includes(letter)) {
+      return true;
+    }
+    return false;
+  }
 
   // Shows matched letters chosen.
   showMatchedLetter(letter) {
-    console.log(letter);
-    let match = document
+    let correctLetters = document
       .getElementById("phrase")
       .getElementsByClassName(letter);
-    console.log(match);
-    for (let i = 0; i < match.length; i++) {
-      match[i].classList.replace("hide", "show");
+    console.log(correctLetters);
+    for (let i = 0; i < correctLetters.length; i++) {
+      correctLetters[i].classList.replace("hide", "show");
     }
   }
 }
