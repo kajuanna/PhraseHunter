@@ -7,25 +7,25 @@ class Game {
   constructor() {
     this.missed = 0;
     this.phrases = [
-      "Coding is great",
-      "Flipping Pancakes Yum",
-      "I said what I said",
-      "Coding is the way to go",
-      "Up Up And Away",
+      new Phrase("Coding is great"),
+      new Phrase("Flipping Pancakes Yum"),
+      new Phrase("I said what I said"),
+      new Phrase("Coding is the way to go"),
+      new Phrase("Up Up And Away"),
     ];
     this.activePhrase = null;
   }
   //Starts the game displaying the random phrases.
   startGame() {
-    this.getRandomPhrase();
+    this.activePhrase = this.getRandomPhrase();
     this.activePhrase.addPhraseToDisplay();
     document.getElementById("overlay").style.display = "none"; //removes the start game overlay
   }
+
   //Selects the random phrases from the array.
   getRandomPhrase() {
     const number = Math.floor(Math.random() * this.phrases.length);
-    let phrase = this.phrases[number];
-    this.activePhrase = new Phrase(phrase);
+    return this.phrases[number];
   }
 
   /**
@@ -43,7 +43,10 @@ class Game {
     if (userFoundLetter) {
       keyElement.classList.add("chosen");
       this.activePhrase.showMatchedLetter(letter);
-      this.checkForWin();
+
+      if (this.checkForWin()) {
+        this.gameOver(true);
+      }
     } else {
       keyElement.classList.add("wrong");
       this.removeLife();
@@ -58,15 +61,17 @@ class Game {
       let currentImage = scoreboardImages[this.missed];
       currentImage.src = "images/lostHeart.png";
     } else {
-      this.gameOver();
+      this.gameOver(false);
     }
     this.missed++;
   }
-  //Checcks for win if false game over.
+  //Checks for win if false game over.
   checkForWin() {
     let hiddenLetters = document.getElementsByClassName("hide");
-    if (!hiddenLetters.length) {
-      this.gameOver(true);
+    if (hiddenLetters.length === 0) {
+      return true;
+    } else {
+      return false;
     }
   }
   //Displays the game over message won or loss.
